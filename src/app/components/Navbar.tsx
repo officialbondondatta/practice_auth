@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Link, Button } from "@heroui/react";
-import { useSession } from "@/lib/auth-client";
+import { signOut, useSession } from "@/lib/auth-client";
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,7 +27,7 @@ const Navbar = () => {
                 <>
                     <span className="text-xs">Welcome, {data?.user.name}</span>
 
-                    <Button onClick={() => router.push("/Sign-up")} className="w-full">Sign Out</Button>
+                    <Button onClick={() => signOut()} className="w-full">Sign Out</Button>
                 </>
                 :
                 <>
@@ -76,7 +76,7 @@ const Navbar = () => {
                         </svg>
                     </button>
                     <div className="flex items-center gap-3">
-                        <p className="font-bold">ACME</p>
+                        <Link href="/" className="font-bold">ACME</Link>
                     </div>
                 </div>
                 <ul className="hidden items-center gap-4 md:flex">

@@ -2,7 +2,9 @@
 import { authClient } from "@/lib/auth-client";
 import { Button, Description, FieldError, Form, Input, Label, TextField } from "@heroui/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 const SignInPage = () => {
+    const router = useRouter()
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
@@ -12,7 +14,9 @@ const SignInPage = () => {
             email: inputData.email,
             password: inputData.password
         })
-        console.log(data, error)
+        if (data?.token) {
+            router.push("/")
+        }
     };
     return (
         <div className="container mx-auto mt-40 flex flex-col items-center justify-center">
