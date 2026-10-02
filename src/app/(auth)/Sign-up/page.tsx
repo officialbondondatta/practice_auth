@@ -1,6 +1,7 @@
 "use client"
 import { authClient } from "@/lib/auth-client";
 import { Button, Description, FieldError, Form, Input, Label, TextField } from "@heroui/react";
+import Link from "next/link";
 const SignUpPage = () => {
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -77,6 +78,10 @@ const SignUpPage = () => {
                     <Button type="reset" variant="secondary">
                         Reset
                     </Button>
+                </div>
+                <div className="flex gap-2">
+                    <h1>Already a user ? </h1>
+                    <Link className="underline" href={"/Sign-in"}>Sign In Now</Link>
                 </div>
             </Form>
         </div>

@@ -1,20 +1,24 @@
 "use client"
+import { authClient } from "@/lib/auth-client";
 import { Button, Description, FieldError, Form, Input, Label, TextField } from "@heroui/react";
+import Link from "next/link";
 const SignInPage = () => {
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        const data: Record<string, string> = {};
-        // Convert FormData to plain object
-        formData.forEach((value, key) => {
-            data[key] = value.toString();
-        });
-        alert(`Form submitted with: ${JSON.stringify(data, null, 2)}`);
+        const inputData = Object.fromEntries(formData.entries()) as Record<string, string>;
+        // console.log(data)
+        const { data, error } = await authClient.signIn.email({
+            email: inputData.email,
+            password: inputData.password
+        })
+        console.log(data, error)
     };
     return (
-        <div>
-            <h2>Sign-in</h2>
-            <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
+        <div className="container mx-auto mt-40 flex flex-col items-center justify-center">
+            <h1 className="text-3xl font-bold mb-5">Sign In</h1>
+            <Form className="flex bg-sky-100 py-10 px-5 flex-col gap-4" onSubmit={onSubmit}>
+
                 <TextField
                     isRequired
                     name="email"
@@ -60,6 +64,10 @@ const SignInPage = () => {
                     <Button type="reset" variant="secondary">
                         Reset
                     </Button>
+                </div>
+                <div className="flex gap-2">
+                    <h1>Do not have account ? </h1>
+                    <Link className="underline" href={"/Sign-up"}>Sign Up Now</Link>
                 </div>
             </Form>
         </div>
